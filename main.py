@@ -7,6 +7,10 @@ from datetime import datetime
 from captcha_ocr import get_ocr_res
 import os
 from pytz import timezone
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 # 设置基本的URL和数据
 RandCodeUrl = "http://zhjw.qfnu.edu.cn/verifycode.servlet"  # 验证码请求URL
