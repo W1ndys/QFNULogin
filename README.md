@@ -56,7 +56,7 @@ http://127.0.0.1:5000
 sh linux_build_and_run.sh
 ```
 
-构建成功后，访问 http://localhost:5000 即可, 也可以运行在服务器上，公网访问
+构建成功后，访问 http://localhost:5000 即可, 也可以运行在服务器上，公网访问 http://ip:5000
 
 ## 致谢
 
