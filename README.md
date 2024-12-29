@@ -39,8 +39,7 @@ pip install -r requirements.txt
 2. 运行脚本
 
 ```bash
-cd app
-python qfnuloginwebserver.py
+python webserver.py
 ```
 
 3. 访问网页
@@ -48,6 +47,16 @@ python qfnuloginwebserver.py
 ```bash
 http://127.0.0.1:5000
 ```
+
+### docker
+
+根据你的系统选择构建运行脚本，这里以 Linux 为例
+
+```bash
+sh linux_build_and_run.sh
+```
+
+构建成功后，访问 http://localhost:5000 即可, 也可以运行在服务器上，公网访问
 
 ## 致谢
 
