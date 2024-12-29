@@ -4,7 +4,7 @@ from main import simulate_login, get_exam_page, parse_exam_data, save_calendar_t
 app = Flask(__name__, static_folder="static")
 
 # 定义版本号
-__version__ = "2.0.0"
+__version__ = "2.0.1"
 
 
 @app.route("/api/login", methods=["POST"])
