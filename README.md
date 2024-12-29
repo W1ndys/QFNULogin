@@ -4,8 +4,7 @@
 
 以读取考试安排为例，可以读取考试安排，并生成 ics 文件，导入到日历中
 
-![Screenshot_2024-12-29-02-14-44-097_com microsoft emmx](https://github.com/user-attachments/assets/47132930-18c4-4580-8e6b-ef2835fb7ada)
-
+![image](assets/image.png)
 
 ## 使用
 
