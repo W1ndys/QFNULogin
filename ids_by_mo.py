@@ -38,6 +38,8 @@ aes = AES.new(key=parse(key), mode=AES.MODE_CBC, iv=parse(rand_str(16)))
 # 从环境变量中获取用户名和密码
 username = os.getenv("USER_ACCOUNT")
 password = os.getenv("USER_PASSWORD")
+if password is None:
+    raise ValueError("未设置 USER_PASSWORD 环境变量")
 
 password = rand_str(64) + password
 

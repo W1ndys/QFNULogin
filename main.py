@@ -148,8 +148,6 @@ def parse_exam_data(html_content):
             f"考试时间: {exam_time}, 技术支持: https://www.w1ndys.top , "
             f"开发者qq: https://qm.qq.com/q/IeoRba7FmY"
         )
-        # 确保事件的时区为东八区
-        event.timezone = "Asia/Shanghai"
 
         # 添加事件到日历
         calendar.events.add(event)
@@ -236,7 +234,7 @@ def main():
     if not user_account or not user_password:
         print("请在.env文件中设置USER_ACCOUNT和USER_PASSWORD环境变量\n")
         # 重置.env文件
-        with open(".env", "w") as f:
+        with open(".env", "w", encoding="utf-8") as f:
             f.write("USER_ACCOUNT=\nUSER_PASSWORD=")
         return
 
