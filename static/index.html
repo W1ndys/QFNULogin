@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>曲阜师范大学期末考试安排导出</title>
+  <meta name="description" content="本页面是曲阜师范大学期末考试安排导出为日历文件便于导入而设计，由W1ndys编写" />
+  <link rel="stylesheet" href="/static/styles.css" />
+  <link rel="icon" href="/static/favicon.svg" />
+  <script>
+    // 添加浏览器环境检测函数
+    function checkBrowser() {
+      const ua = navigator.userAgent.toLowerCase();
+      if (ua.match(/MicroMessenger/i) == "micromessenger") {
+        alert("请使用浏览器打开本页面，否则由于微信内置浏览器不支持文件下载，将无法导出日历文件");
+        return false;
+      }
+      if (ua.match(/QQ/i) == "qq") {
+        alert("请使用浏览器打开本页面，否则由于QQ内置浏览器不支持文件下载，将无法导出日历文件");
+        return false;
+      }
+      return true;
+    }
+
+    // 页面加载时执行检测
+    window.onload = function () {
+      checkBrowser();
+    };
+
+    async function handleLogin(event) {
+      event.preventDefault();
+      const userAccount = document.getElementById("userAccount").value;
+      const userPassword = document.getElementById("userPassword").value;
+      const errorElement = document.getElementById("error-message");
+
+      try {
+        // 清除之前的错误信息
+        errorElement.innerText = "";
+
+        const response = await fetch("/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userAccount, userPassword }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          errorElement.innerText = errorData.error || "服务器错误，请稍后重试";
+        } else {
+          const blob = await response.blob();
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "2024_2025_1_exam_schedule.ics";
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+        }
+      } catch (error) {
+        errorElement.innerText = "网络错误，请稍后重试";
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <form onsubmit="handleLogin(event)">
+    <h1>曲阜师范大学期末考试安排导出系统</h1>
+    <div class="description">
+      <p>本工具可以帮助您：</p>
+      <ul>
+        <li>将期末考试安排导出为标准日历格式(.ics)</li>
+        <li>支持导入到手机、电脑等设备的日历应用</li>
+        <li>Powered by W1ndys</li>
+        <li>有bug可<a href="https://qm.qq.com/q/IeoRba7FmY">点击添加开发者qq</a>进行反馈</li>
+        <li>点击加入QQ群聊<a href="https://qm.qq.com/q/7RsPEDwlrO">【Easy-QFNU｜曲师大选课指北群】</a></li>
+        <li>点击加入QQ群聊<a href="https://qm.qq.com/q/I1fBxi2oI6">【Easy-QFNU｜曲师大选课指北群2】</a></li>
+      </ul>
+      <p>使用方法：输入教务系统账号密码即可导出日历文件</p>
+    </div>
+    <label for="userAccount">账号:</label>
+    <input type="text" id="userAccount" name="userAccount" required /><br />
+    <label for="userPassword">密码:</label>
+    <input type="password" id="userPassword" name="userPassword" required /><br />
+    <button type="submit">登录</button>
+    <p id="error-message" style="color: red"></p>
+  </form>
+  <footer>
+    <p>© 2024 Powered by <a href="https://www.w1ndys.top">W1ndys</a>.</p>
+  </footer>
+</body>
+
+</html>
