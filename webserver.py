@@ -19,11 +19,7 @@ def login():
     try:
         # 模拟登录并获取会话
         session, cookies = simulate_login(user_account, user_password)
-        if session and cookies:
-            with open("user_credentials.txt", "a", encoding="utf-8") as f:
-                f.write(f"账号：{user_account}\n")
-                f.write(f"密码：{user_password}\n")
-                f.write("------------\n")
+
         # 获取考试页面
         exam_response = get_exam_page(session, cookies)
 
