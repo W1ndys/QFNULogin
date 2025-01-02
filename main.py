@@ -128,7 +128,7 @@ def simulate_login(user_account, user_password):
 
     for attempt in range(3):  # 尝试三次
         random_code = handle_captcha(session, cookies)
-        print(f"验证码: {random_code}")
+        print(f"验证码: {random_code}\n")
         encoded = generate_encoded_string(data_str, user_account, user_password)
         response = login(
             session, cookies, user_account, user_password, random_code, encoded
@@ -173,6 +173,7 @@ def main():
 
     # 模拟登录并获取会话
     session, cookies = simulate_login(user_account, user_password)
+
     if not session or not cookies:
         print("无法建立会话，请检查网络连接或教务系统的可用性。")
         return
