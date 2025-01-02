@@ -137,15 +137,19 @@ def simulate_login(user_account, user_password):
     raise Exception("验证码识别错误，请重试")
 
 
-def main():
-    """
-    主函数，协调整个程序的执行流程
-    """
+def print_welcome():
     print("\n" * 30)
     print(f"\n{'*' * 10} 曲阜师范大学教务系统模拟登录脚本 {'*' * 10}\n")
     print("By W1ndys")
     print("https://github.com/W1ndys")
     print("\n\n")
+
+
+def main():
+    """
+    主函数，协调整个程序的执行流程
+    """
+    print_welcome()
 
     # 获取环境变量
     user_account, user_password = get_user_credentials()
