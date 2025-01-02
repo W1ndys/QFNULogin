@@ -94,71 +94,6 @@ def login(session, cookies, user_account, user_password, random_code, encoded):
     )
 
 
-def get_exam_page(session, cookies):
-    """
-    获取考试安排页面内容
-    返回: 页面响应内容
-    """
-    target_url = "http://zhjw.qfnu.edu.cn/jsxsd/xsks/xsksap_list?xqlbmc=&sxxnxq=&dqxnxq=&ckbz=&xnxqid=2024-2025-1&xqlb=#/"
-    return session.get(target_url, cookies=cookies, timeout=1000)
-
-
-def parse_exam_data(html_content):
-    """
-    解析考试数据并创建日历事件
-    返回: Calendar对象
-    """
-    soup = BeautifulSoup(html_content, "html.parser")
-    calendar = Calendar()
-
-    for row in soup.select("table#dataList tr")[1:]:
-        cells = row.find_all("td")
-        if len(cells) < 11:
-            continue
-
-        # 提取信息
-        exam_number = cells[0].text.strip()
-        campus = cells[1].text.strip()
-        session = cells[2].text.strip()
-        course_code = cells[3].text.strip()
-        course_name = cells[4].text.strip()
-        teacher = cells[5].text.strip()
-        exam_time = cells[6].text.strip()
-        location = cells[7].text.strip()
-        seat_number = cells[8].text.strip()
-
-        # 解码考试时间
-        date_str, time_range = exam_time.split(" ")
-        start_time, end_time = time_range.split("~")
-
-        # 解析日期和时间，并设置为东八区时间
-        tz = timezone("Asia/Shanghai")
-        start_datetime = tz.localize(
-            datetime.strptime(f"{date_str} {start_time}", "%Y-%m-%d %H:%M")
-        )
-        end_datetime = tz.localize(
-            datetime.strptime(f"{date_str} {end_time}", "%Y-%m-%d %H:%M")
-        )
-
-        # 创建一个事件
-        event = Event()
-        event.name = f"{course_name} - {teacher}"
-        event.begin = start_datetime
-        event.end = end_datetime
-        event.location = location
-        event.description = (
-            f"序号: {exam_number}, 校区: {campus}, 场次: {session}, "
-            f"课程编号: {course_code}, 座位号: {seat_number}, "
-            f"考试时间: {exam_time}, 技术支持: https://www.w1ndys.top , "
-            f"开发者qq: https://qm.qq.com/q/IeoRba7FmY"
-        )
-
-        # 添加事件到日历
-        calendar.events.add(event)
-
-    return calendar
-
-
 def get_user_credentials():
     """
     获取用户账号和密码
@@ -202,31 +137,6 @@ def simulate_login(user_account, user_password):
     raise Exception("验证码识别错误，请重试")
 
 
-def save_response_to_file(content, filename, description):
-    """
-    保存响应内容到文件
-    参数:
-        content: 要保存的内容
-        filename: 文件名
-        description: 描述信息
-    """
-    with open(filename, "w", encoding="utf-8") as f:
-        f.write(content)
-    print(f"{description}已保存到{filename}文件中")
-
-
-def save_calendar_to_file(calendar, filename):
-    """
-    保存日历到文件
-    参数:
-        calendar: Calendar对象
-        filename: 文件名
-    """
-    with open(filename, "w", encoding="utf-8") as f:
-        f.write(calendar.serialize())
-    print(f"考试安排已保存到{filename}文件中")
-
-
 def main():
     """
     主函数，协调整个程序的执行流程
@@ -248,13 +158,6 @@ def main():
 
     # 模拟登录并获取会话
     session, cookies = simulate_login(user_account, user_password)
-
-    # 获取考试页面
-    exam_response = get_exam_page(session, cookies)
-
-    # 解析数据并生成日历
-    calendar = parse_exam_data(exam_response.text)
-    save_calendar_to_file(calendar, "2024_2025_1_exam_schedule.ics")
 
 
 if __name__ == "__main__":
