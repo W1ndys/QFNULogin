@@ -8,6 +8,12 @@
 
 ---
 
+## 示例实现：曲阜师范大学期末考试导出为 ics 日历文件
+
+[https://github.com/W1ndys/QFNUExam2ics](https://github.com/W1ndys/QFNUExam2ics)
+
+---
+
 ## 友情链接
 
 - [曲阜师范大学课表自动生成](https://github.com/liu-zhe/QFNU-ics)：支持一键导入，兼容各种日历 APP
