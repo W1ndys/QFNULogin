@@ -137,11 +137,11 @@ def simulate_login(user_account, user_password):
         # 检查响应状态码和内容
         if response.status_code == 200:
             if "验证码错误!!" in response.text:
-                print(f"验证码识别错误，重试第 {attempt + 1} 次")
+                print(f"验证码识别错误，重试第 {attempt + 1} 次\n")
                 continue  # 继续尝试
             if "密码错误" in response.text:
                 raise Exception("用户名或密码错误")
-            print("登录成功，cookies已返回")
+            print("登录成功，cookies已返回\n")
             return session, cookies
         else:
             raise Exception("登录失败")
