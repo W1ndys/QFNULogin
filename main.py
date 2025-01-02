@@ -37,7 +37,18 @@ def handle_captcha(session, cookies):
     返回: 识别出的验证码字符串
     """
     response = session.get(RandCodeUrl, cookies=cookies)
-    image = Image.open(BytesIO(response.content))
+
+    # 添加调试信息
+    if response.status_code != 200:
+        print(f"请求验证码失败，状态码: {response.status_code}")
+        return None
+
+    try:
+        image = Image.open(BytesIO(response.content))
+    except Exception as e:
+        print(f"无法识别图像文件: {e}")
+        return None
+
     return get_ocr_res(image)
 
 
@@ -130,6 +141,7 @@ def simulate_login(user_account, user_password):
                 continue  # 继续尝试
             if "密码错误" in response.text:
                 raise Exception("用户名或密码错误")
+            print("登录成功，cookies已返回")
             return session, cookies
         else:
             raise Exception("登录失败")
@@ -155,13 +167,15 @@ def main():
     user_account, user_password = get_user_credentials()
     if not user_account or not user_password:
         print("请在.env文件中设置USER_ACCOUNT和USER_PASSWORD环境变量\n")
-        # 重置.env文件
         with open(".env", "w", encoding="utf-8") as f:
             f.write("USER_ACCOUNT=\nUSER_PASSWORD=")
         return
 
     # 模拟登录并获取会话
     session, cookies = simulate_login(user_account, user_password)
+    if not session or not cookies:
+        print("无法建立会话，请检查网络连接或教务系统的可用性。")
+        return
 
     # 接下来的操作请参考 https://github.com/W1ndys/QFNUExam2ics/blob/ec6e5b4969b7605ca3654e2545b666376b62b7ef/main.py#L275
     # 实际上就是带着 session 和 cookies 去请求教务系统，然后获取数据
