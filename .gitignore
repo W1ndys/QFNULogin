@@ -170,6 +170,3 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-*.ics
-*user_credentials.txt
-*user_credentials_cleaned.txt
