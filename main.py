@@ -159,6 +159,9 @@ def main():
     # 模拟登录并获取会话
     session, cookies = simulate_login(user_account, user_password)
 
+    # 接下来的操作请参考 https://github.com/W1ndys/QFNUExam2ics/blob/ec6e5b4969b7605ca3654e2545b666376b62b7ef/main.py#L275
+    # 实际上就是带着 session 和 cookies 去请求教务系统，然后获取数据
+
 
 if __name__ == "__main__":
     main()
