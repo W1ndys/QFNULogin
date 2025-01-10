@@ -37,7 +37,18 @@ def handle_captcha(session, cookies):
     返回: 识别出的验证码字符串
     """
     response = session.get(RandCodeUrl, cookies=cookies)
-    image = Image.open(BytesIO(response.content))
+
+    # 添加调试信息
+    if response.status_code != 200:
+        print(f"请求验证码失败，状态码: {response.status_code}")
+        return None
+
+    try:
+        image = Image.open(BytesIO(response.content))
+    except Exception as e:
+        print(f"无法识别图像文件: {e}")
+        return None
+
     return get_ocr_res(image)
 
 
@@ -123,7 +134,7 @@ def simulate_login(user_account, user_password):
 
     for attempt in range(3):  # 尝试三次
         random_code = handle_captcha(session, cookies)
-        print(f"验证码: {random_code}")
+        print(f"验证码: {random_code}\n")
         encoded = generate_encoded_string(data_str, user_account, user_password)
         response = login(
             session, cookies, user_account, user_password, random_code, encoded
@@ -132,10 +143,11 @@ def simulate_login(user_account, user_password):
         # 检查响应状态码和内容
         if response.status_code == 200:
             if "验证码错误!!" in response.text:
-                print(f"验证码识别错误，重试第 {attempt + 1} 次")
+                print(f"验证码识别错误，重试第 {attempt + 1} 次\n")
                 continue  # 继续尝试
             if "密码错误" in response.text:
                 raise Exception("用户名或密码错误")
+            print("登录成功，cookies已返回\n")
             return session, cookies
         else:
             raise Exception("登录失败")
@@ -143,27 +155,34 @@ def simulate_login(user_account, user_password):
     raise Exception("验证码识别错误，请重试")
 
 
-def main():
-    """
-    主函数，协调整个程序的执行流程
-    """
+def print_welcome():
     print("\n" * 30)
     print(f"\n{'*' * 10} 曲阜师范大学教务系统模拟登录脚本 {'*' * 10}\n")
     print("By W1ndys")
     print("https://github.com/W1ndys")
     print("\n\n")
 
+
+def main():
+    """
+    主函数，协调整个程序的执行流程
+    """
+    print_welcome()
+
     # 获取环境变量
     user_account, user_password = get_user_credentials()
     if not user_account or not user_password:
         print("请在.env文件中设置USER_ACCOUNT和USER_PASSWORD环境变量\n")
-        # 重置.env文件
         with open(".env", "w", encoding="utf-8") as f:
             f.write("USER_ACCOUNT=\nUSER_PASSWORD=")
         return
 
     # 模拟登录并获取会话
     session, cookies = simulate_login(user_account, user_password)
+
+    if not session or not cookies:
+        print("无法建立会话，请检查网络连接或教务系统的可用性。")
+        return
 
     # 接下来的操作请参考 https://github.com/W1ndys/QFNUExam2ics/blob/ec6e5b4969b7605ca3654e2545b666376b62b7ef/main.py#L275
     # 实际上就是带着 session 和 cookies 去请求教务系统，然后获取数据
