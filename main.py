@@ -13,11 +13,14 @@ load_dotenv()
 
 
 # 设置基本的URL和数据
-RandCodeUrl = "http://zhjw.qfnu.edu.cn/verifycode.servlet"  # 验证码请求URL
-loginUrl = "http://zhjw.qfnu.edu.cn/Logon.do?method=logonLdap"  # 登录请求URL
-dataStrUrl = (
-    "http://zhjw.qfnu.edu.cn/Logon.do?method=logon&flag=sess"  # 初始数据请求URL
-)
+
+# 验证码请求URL
+RandCodeUrl = "http://zhjw.qfnu.edu.cn/verifycode.servlet"
+# 登录请求URL
+loginUrl = "http://zhjw.qfnu.edu.cn/Logon.do?method=logonLdap"
+# 初始数据请求URL
+dataStrUrl = "http://zhjw.qfnu.edu.cn/Logon.do?method=logon&flag=sess"
+
 
 
 def get_initial_session():
