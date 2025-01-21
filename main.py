@@ -21,8 +21,6 @@ loginUrl = "http://zhjw.qfnu.edu.cn/Logon.do?method=logonLdap"
 # 初始数据请求URL
 dataStrUrl = "http://zhjw.qfnu.edu.cn/Logon.do?method=logon&flag=sess"
 
-
-
 def get_initial_session():
     """
     创建会话并获取初始数据
@@ -65,23 +63,17 @@ def generate_encoded_string(data_str, user_account, user_password):
     返回: encoded字符串
     """
     res = data_str.split("#")
-    if len(res) < 2:
-        raise ValueError("初始数据字符串格式不正确")
-
     code, sxh = res[0], res[1]
     data = f"{user_account}%%%{user_password}"
     encoded = ""
     b = 0
 
     for a in range(len(code)):
-        if a < len(data):
+        if a < 20:
             encoded += data[a]
             for _ in range(int(sxh[a])):
-                if b < len(code):
-                    encoded += code[b]
-                    b += 1
-                else:
-                    raise ValueError("编码过程中索引超出范围")
+                encoded += code[b]
+                b += 1
         else:
             encoded += data[a:]
             break
