@@ -2,7 +2,6 @@ import requests
 from PIL import Image
 from io import BytesIO
 from bs4 import BeautifulSoup
-from ics import Calendar, Event
 from datetime import datetime
 from captcha_ocr import get_ocr_res
 import os
@@ -20,6 +19,7 @@ RandCodeUrl = "http://zhjw.qfnu.edu.cn/verifycode.servlet"
 loginUrl = "http://zhjw.qfnu.edu.cn/Logon.do?method=logonLdap"
 # 初始数据请求URL
 dataStrUrl = "http://zhjw.qfnu.edu.cn/Logon.do?method=logon&flag=sess"
+
 
 def get_initial_session():
     """
@@ -143,7 +143,7 @@ def simulate_login(user_account, user_password):
             if "密码错误" in response.text:
                 raise Exception("用户名或密码错误")
             print("登录成功，cookies已返回\n")
-            return session, cookies
+            return session
         else:
             raise Exception("登录失败")
 
@@ -173,7 +173,7 @@ def main():
         return
 
     # 模拟登录并获取会话
-    session, cookies = simulate_login(user_account, user_password)
+    session = simulate_login(user_account, user_password)
 
     if not session or not cookies:
         print("无法建立会话，请检查网络连接或教务系统的可用性。")
