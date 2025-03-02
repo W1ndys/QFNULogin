@@ -28,3 +28,5 @@
 感谢 [liu-zhe](https://github.com/liu-zhe)(Lukzia) 的[qfnu_api.py](https://github.com/liu-zhe/QFNU-ics/blob/main/qfnu_api.py) 模拟登录启发
 
 感谢 [nakaii](https://github.com/nakaii-002)(nakaii) 的[Qfnu_CAS_token](https://github.com/nakaii-002/Qfnu_CAS_token) 验证码识别启发
+
+感谢 [AuroBreeze](https://github.com/AuroBreeze) 的[生成 encoded 算法](https://github.com/W1ndys/QFNULogin/commit/f76a20c80656a34cea2e2db4e988917cf404d00a) 的启发
