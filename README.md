@@ -14,6 +14,10 @@
 
 ---
 
+使用本项目开发的脚本请带上`qfnulogin`的标签，便于搜索 https://github.com/topics/qfnulogin
+
+---
+
 ## 友情链接
 
 - [曲阜师范大学课表自动生成](https://github.com/liu-zhe/QFNU-ics)：支持一键导入，兼容各种日历 APP
