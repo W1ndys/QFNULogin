@@ -4,7 +4,7 @@
 ![GitHub forks](https://img.shields.io/github/forks/W1ndys/QFNULogin)
 ![GitHub license](https://img.shields.io/github/license/W1ndys/QFNULogin)
 
-曲阜师范大学教务系统（强智教务）模拟登陆脚本，便于各位写脚本读取教务系统数据，对于其他学校的强智教务2017也是通用的，改个URL即可
+qfnu 模拟登录，对于其他学校的强智教务2017也是通用的，改个URL即可
 
 ---
 
