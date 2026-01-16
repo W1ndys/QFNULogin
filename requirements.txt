@@ -1,5 +1,0 @@
-pytz
-Pillow
-ddddocr
-python-dotenv
-colorlog
