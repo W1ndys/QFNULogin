@@ -1,0 +1,13 @@
+[project]
+name = "qfnulogin"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "colorlog>=6.10.1",
+    "ddddocr>=1.5.6",
+    "pillow>=12.1.0",
+    "python-dotenv>=1.2.1",
+    "pytz>=2025.2",
+]
